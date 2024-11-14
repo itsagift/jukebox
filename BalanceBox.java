@@ -44,22 +44,21 @@ public class BalanceBox {
         System.out.println(coinPayments.returnFunds());
     }
 
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        BalanceBox balanceBox = new BalanceBox(scan);
+    public void promptBalance(){
+        System.out.println(scan);
         while (true) {
             System.out.print("Enter 1 to add funds, 2 to make a purchase, 3 to return funds, 4 to quit: ");
             String input = scan.nextLine();
             switch (input) {
                 case "1":
-                    balanceBox.acceptFunds();
+                    this.acceptFunds();
                     break;
                 case "2":
                     System.out.print("Enter the purchase cost: ");
                     input = scan.nextLine();
                     try {
                         int amount = Integer.parseInt(input);
-                        if (balanceBox.deductFunds(amount)) {
+                        if (deductFunds(amount)) {
                             System.out.println("Successfully deducted funds");
                         } else {
                             System.out.println("Unable to deduct funds");
@@ -69,14 +68,15 @@ public class BalanceBox {
                     }
                     break;
                 case "3":
-                    balanceBox.returnFunds();
+                    this.returnFunds();
                     break;
                 case "4":
-                    scan.close();
                     return;
                 default:
                     System.out.println("Invalid option");
             }
         }
     }
+
+   
 }

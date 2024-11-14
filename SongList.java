@@ -49,13 +49,22 @@ public class SongList {
   public String[][] getSongInfo(){
     return this.songInfo;
   }
-  
-  
+  public String[] getIndividualSong(int index){
+    return this.songInfo[index];
+  }
+
+  public String toString(){
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < songInfo.length; i++){
+      for (int j = 0; j < songInfo.length; j++){
+        sb.append(String.format("%s \n", songInfo[i][j]));
+      }
+    }
+    return sb.toString();
+  }
+
 
   public static void main(String[] args) {
-    SongList testList = new SongList(args[0]);
-    for (int i = 0; i < testList.getSongInfo().length; i++){
-      System.out.println(Arrays.toString(testList.getSongInfo()[i]));
-    }
+
   }
 }
