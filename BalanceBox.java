@@ -44,14 +44,13 @@ public class BalanceBox {
         System.out.println(coinPayments.returnFunds());
     }
 
-    public void promptBalance(){
-        System.out.println(scan);
+    public void promptBalance() {
         while (true) {
             System.out.print("Enter 1 to add funds, 2 to make a purchase, 3 to return funds, 4 to quit: ");
             String input = scan.nextLine();
             switch (input) {
                 case "1":
-                    this.acceptFunds();
+                    acceptFunds();
                     break;
                 case "2":
                     System.out.print("Enter the purchase cost: ");
@@ -68,7 +67,7 @@ public class BalanceBox {
                     }
                     break;
                 case "3":
-                    this.returnFunds();
+                    returnFunds();
                     break;
                 case "4":
                     return;
@@ -78,5 +77,4 @@ public class BalanceBox {
         }
     }
 
-   
 }

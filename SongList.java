@@ -1,17 +1,15 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class SongList {
   private String songInfo[][];
-  private static final int SONG_TITLE = 0;
-  private static final int SONG_ARTIST = 1;
-  private static final int SONG_COST = 2;
-  private static final int SONG_URI = 3;
+  public static final int SONG_TITLE = 0;
+  public static final int SONG_ARTIST = 1;
+  public static final int SONG_COST = 2;
+  public static final int SONG_URI = 3;
 
-
-  public SongList(String fileName){
+  public SongList(String fileName) {
     int lineCount = 0;
     try {
       File file = new File(fileName);
@@ -46,25 +44,20 @@ public class SongList {
     }
   }
 
-  public String[][] getSongInfo(){
+  public String[][] getSongInfo() {
     return this.songInfo;
   }
-  public String[] getIndividualSong(int index){
+
+  public String[] getIndividualSong(int index) {
     return this.songInfo[index];
   }
 
-  public String toString(){
+  public String toString() {
     StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < songInfo.length; i++){
-      for (int j = 0; j < songInfo.length; j++){
-        sb.append(String.format("%s \n", songInfo[i][j]));
-      }
+    for (int i = 0; i < songInfo.length; i++) {
+      sb.append(String.format("%d: %s, %s, %s\n", i, songInfo[i][SONG_TITLE], songInfo[i][SONG_ARTIST],
+          songInfo[i][SONG_COST]));
     }
     return sb.toString();
-  }
-
-
-  public static void main(String[] args) {
-
   }
 }
