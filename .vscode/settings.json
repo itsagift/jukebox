@@ -1,0 +1,15 @@
+{
+  "java.project.referencedLibraries": [
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx-swt.jar",
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx.media.jar",
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx.swing.jar",
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx.controls.jar",
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx.base.jar",
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx.fxml.jar",
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx.web.jar",
+    "/Users/aa/Downloads/javafx-sdk-23.0.1/lib/javafx.graphics.jar"
+  ],
+  "java.project.sourcePaths": [
+    "."
+  ]
+}
