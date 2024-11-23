@@ -1,4 +1,6 @@
-package hellofx; 
+ 
+
+import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +15,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 public class SongPlayer extends Application {
+    private MediaPlayer mediaPlayer;
+    private MediaView mediaView;
 
     private static final String MEDIA_URL =
-    "file:/Users/aa/Documents/JokerOST.mp3";
-
+    "https://www.kozco.com/tech/piano2-Audacity1.2.5.mp3";
+    
     @Override
     public void start(Stage primaryStage) throws Exception{
         // Parent root = FXMLLoader.load(getClass().getResource("hellofx.fxml"));
@@ -27,14 +31,23 @@ public class SongPlayer extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
+        
+        mediaView = new MediaView();
+        root.getChildren().add(mediaView);
         primaryStage.show();
-        Media media = new Media(MEDIA_URL);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        MediaView mediaView = new MediaView(mediaPlayer);
-        ((Group)scene.getRoot()).getChildren().add(mediaView);
     }
-
+    public void playSong(String song){
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+            System.out.println("already exists");
+        } else {
+            Media media = new Media(MEDIA_URL);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setAutoPlay(true);
+            mediaView.setMediaPlayer(mediaPlayer);
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);

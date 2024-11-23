@@ -7,12 +7,14 @@ public class PurchaseQueue {
   private SongList songList;
   private Scanner scan;
   private BalanceBox balance;
+  private SongPlayer songPlayer;
 
   public PurchaseQueue(String filename, Scanner scanArg) {
     this.balance = new BalanceBox(scanArg);
     this.songList = new SongList(filename);
     this.queue = new ArrayDeque<>();
     this.scan = scanArg;
+    this.songPlayer = new SongPlayer();
   }
 
   public void takeSongIndex() {
@@ -83,7 +85,9 @@ public class PurchaseQueue {
           break;
         case "5":
           if (purchaseQueue.hasNextSong()) {
-            System.out.printf("Playing song at %s\n", purchaseQueue.nextSong());
+            javafx.application.Application.launch(SongPlayer.class);
+            purchaseQueue.songPlayer.playSong(purchaseQueue.nextSong());
+            
           } else {
             System.out.println("No songs in queue");
           }
