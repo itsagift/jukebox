@@ -85,9 +85,8 @@ public class PurchaseQueue {
           break;
         case "5":
           if (purchaseQueue.hasNextSong()) {
-            javafx.application.Application.launch(SongPlayer.class);
-            purchaseQueue.songPlayer.playSong(purchaseQueue.nextSong());
-            
+            System.out.println("buying");
+            testGoal4.launch(testGoal4.class, purchaseQueue.nextSong());
           } else {
             System.out.println("No songs in queue");
           }
