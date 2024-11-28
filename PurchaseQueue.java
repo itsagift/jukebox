@@ -7,14 +7,14 @@ public class PurchaseQueue {
   private SongList songList;
   private Scanner scan;
   private BalanceBox balance;
-  private SongPlayer songPlayer;
+  
 
   public PurchaseQueue(String filename, Scanner scanArg) {
     this.balance = new BalanceBox(scanArg);
     this.songList = new SongList(filename);
     this.queue = new ArrayDeque<>();
     this.scan = scanArg;
-    this.songPlayer = new SongPlayer();
+    
   }
 
   public void takeSongIndex() {
@@ -46,8 +46,8 @@ public class PurchaseQueue {
     balance.returnFunds();
   }
 
-  public String nextSong() {
-    return queue.pop()[SongList.SONG_URI];
+  public String[] nextSong() {
+    return queue.pop();
   }
 
   public boolean hasNextSong() {
@@ -86,7 +86,7 @@ public class PurchaseQueue {
         case "5":
           if (purchaseQueue.hasNextSong()) {
             System.out.println("buying");
-            testGoal4.launch(testGoal4.class, purchaseQueue.nextSong());
+            SongPlayerFX.launch(SongPlayerFX.class, purchaseQueue.nextSong());
           } else {
             System.out.println("No songs in queue");
           }
