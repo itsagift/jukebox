@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class BalanceBox {
-    private CreditPayments creditPayments;
-    private CoinPayments coinPayments;
+    public CreditPayments creditPayments;
+    public CoinPayments coinPayments;
     private int funds = 0;
     private Scanner scan;
 
@@ -12,15 +12,17 @@ public class BalanceBox {
         coinPayments = new CoinPayments(scan);
     }
 
-    public void acceptFunds() {
-        System.out.print("Enter 1 for credit, 2 for coin: ");
-        String input = scan.nextLine();
-        switch (input) {
-            case "1":
-                funds += creditPayments.takePayment();
+    public int getFunds(){
+        return funds;
+    }
+
+    public void acceptFunds(String input, String paymentType) {
+        switch (paymentType) {
+            case "coin":
+                funds += coinPayments.takePayment(input);
                 return;
-            case "2":
-                funds += coinPayments.takePayment();
+            case "credit":
+                funds += creditPayments.takePayment(input);
                 return;
             default:
                 System.out.println("Must enter 1 or 2");
@@ -50,7 +52,7 @@ public class BalanceBox {
             String input = scan.nextLine();
             switch (input) {
                 case "1":
-                    acceptFunds();
+                    acceptFunds(input, "coin");
                     break;
                 case "2":
                     System.out.print("Enter the purchase cost: ");

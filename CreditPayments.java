@@ -8,9 +8,7 @@ public class CreditPayments implements Payments {
         this.scan = scan;
     }
 
-    public int takePayment() {
-        System.out.print("Enter an amount to charge on this credit card: ");
-        String input = scan.nextLine();
+    public int takePayment(String input) {     
         try {
             int amount = Integer.parseInt(input);
             funds += amount;

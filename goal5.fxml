@@ -5,22 +5,56 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.shape.Rectangle?>
 
 
-<HBox 
+<BorderPane 
     xmlns:fx="http://javafx.com/fxml" styleClass="root" fx:controller="Controller">
-    <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
-    <HBox>
-    <Text id="welcome-text" text="Sort By"/>
-    </HBox>
-    <!-- Reference the ToggleGroup for each ToggleButton -->
-    <RadioButton text="Title" fx:id="button1" toggleGroup="$toggleGroup"/>
-    <RadioButton text="Artist" fx:id="button2" toggleGroup="$toggleGroup"/>
+    <right>
+    <VBox>
+      <HBox>
+      <Text id="welcome-text" text="Sort By"/>
+      </HBox>
+      <!-- Reference the ToggleGroup for each ToggleButton -->
+      <RadioButton text="Title" fx:id="button1" toggleGroup="$radioToggleGroup"/>
+      <RadioButton text="Artist" fx:id="button2" toggleGroup="$radioToggleGroup"/>
+      
+      <Text fx:id="actiontarget"/>
+
+      <ListView fx:id="listView"/>
+    </VBox>
+    </right>
+    <center>
+      <BorderPane>
+        <center>
+          <VBox alignment="center">
+            <Label fx:id="nowPlayingLabel">
+            
+            </Label>
+          </VBox>
+        </center>
+        <bottom>
+        <VBox fx:id="bottomVert">
+          <HBox fx:id="textField" spacing="10">
+            <!-- <Label fx:id="textFieldLabel"></Label> -->
+            <TextField fx:id="textFieldField"/>
+            <Button fx:id="payButton" text="Pay"/>
+          </HBox>
+          <HBox fx:id="bottomBar">
+            <ToggleButton fx:id="addChangeButton" toggleGroup="$paymentToggleGroup"/>
+            <ToggleButton fx:id="swipeCardButton" toggleGroup="$paymentToggleGroup"/>
+            <!-- <Rectangle width="200" height="100" fx:id="rectid"/> -->
+            <Label fx:id="balanceLabel"/>
+          </HBox>
+          </VBox>
+        </bottom>
+      </BorderPane>
+    </center>
     
-    <Text fx:id="actiontarget"/>
         
     <stylesheets>
-      <URL value="@Login.css" />
+      <URL value="@test.css" />
     </stylesheets>
 
-</HBox>
+</BorderPane>
