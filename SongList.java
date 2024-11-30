@@ -48,6 +48,14 @@ public class SongList {
     return this.songInfo;
   }
 
+  public String[] getSongTitleList(){
+    String[] songTitles = new String[songInfo.length];
+    for (int i = 0; i < songInfo.length; i++) {
+      songTitles[i] = songInfo[i][0];
+    }
+    return songTitles;
+  }
+
   public String[] getIndividualSong(int index) {
     return this.songInfo[index];
   }
@@ -60,4 +68,5 @@ public class SongList {
     }
     return sb.toString();
   }
+  
 }

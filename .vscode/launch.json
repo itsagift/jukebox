@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "SongPlayerFX",
+      "request": "launch",
+      "mainClass": "SongPlayerFX",
+      "projectName": "Jukebox_ccb6c15e"
+    },
+    {
+      "type": "java",
+      "name": "SongList",
+      "request": "launch",
+      "mainClass": "SongList",
+      "projectName": "Jukebox_ccb6c15e"
+    },
+    {
+      "type": "java",
       "name": "PurchaseQueue",
       "request": "launch",
       "mainClass": "PurchaseQueue",

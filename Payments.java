@@ -1,5 +1,5 @@
 public interface Payments {
-    int takePayment();
+    int takePayment(String payment);
 
     String returnFunds();
 

@@ -37,6 +37,7 @@ public class Controller {
     @FXML private Text actiontarget;
     @FXML private ListView<String[]> listView;
     @FXML private Label nowPlayingLabel;
+    @FXML private Label songPlayingLabel;
     @FXML private ToggleButton addChangeButton;
     @FXML private ToggleButton swipeCardButton;
     @FXML private TextField textFieldField;
@@ -134,14 +135,15 @@ public class Controller {
                 songPlayer = new SongPlayer(song, purchaseQueue);
                 songPlayer.playSong(song);
                 playlistInitialized = true;
+                songPlayingLabel.textProperty().bind(songPlayer.getSongProperty());
             }
         });
         
     };
 
     public void initializePlayingUI(){
-        nowPlayingLabel.setText("Now Playing");
-        queueUI.getChildren().add(new Label("Empty queue"));
+        nowPlayingLabel.setText("Now playing");
+        queueUI.getChildren().add(new Label("Up next:"));
     }
 
     @SuppressWarnings("unused")

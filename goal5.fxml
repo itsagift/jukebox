@@ -32,6 +32,7 @@
       <center>
         <VBox alignment="center">
           <Label fx:id="nowPlayingLabel"/>
+          <Label fx:id="songPlayingLabel"/>
             <ScrollPane>
               <HBox spacing="5" fx:id="queueUI"></HBox>
             </ScrollPane>
