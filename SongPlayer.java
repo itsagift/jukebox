@@ -1,40 +1,51 @@
  import java.nio.file.Paths;
- 
- import javafx.scene.media.Media;
+
+import javafx.util.Duration;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 public class SongPlayer  {
     private MediaPlayer mediaPlayer;
-    private MediaView mediaView;
+    private PurchaseQueue purchaseQueue;
     String[] song;
 
 
-    public SongPlayer(String[] song){
+    public SongPlayer(String[] song, PurchaseQueue purchaseQueue){
         this.song = song;
+        this.purchaseQueue = purchaseQueue;
     }
     
-    public SongPlayer(){
-        this.song = new String[]{"title", "https://www.kozco.com/tech/piano2-Audacity1.2.5.mp3"};
-    }
-
     public String getSongTitle(){
         return this.song[0];
     }
-    
-    public void playSong(){
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.dispose();
-            System.out.println("already exists");
-        } else {
-            String uri = Paths.get(song[3]).toUri().toString();
-            Media media = new Media(uri);
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaView = new MediaView(mediaPlayer);
-            mediaPlayer.setAutoPlay(true);
-            mediaView.setMediaPlayer(mediaPlayer);
-        }
+
+    public void playSong(String[] song){
+        String uri = Paths.get(song[3]).toUri().toString();
+        Media media = new Media(uri);
+        mediaPlayer = new MediaPlayer(media);
+        
+        System.out.println("playing song");
+        mediaPlayer.setOnReady(() -> {
+            System.out.println("Duration: " + mediaPlayer.getMedia().getDuration());
+            mediaPlayer.play();
+        });
+        mediaPlayer.setOnEndOfMedia(() -> {
+            System.out.println("SongPlayer.java: music over");
+            if (purchaseQueue.hasNextSong()){
+                playSong(purchaseQueue.nextSong());
+            } else {
+                mediaPlayer.dispose();
+            }
+           
+        }); 
+        mediaPlayer.setOnError(() -> {
+            System.out.println("Error: " + mediaPlayer.getError());
+        });
+        
     }
 
     

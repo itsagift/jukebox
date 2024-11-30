@@ -1,4 +1,6 @@
-Test Song 1,Artist 1,0,./assets/Sneaky Snitch.mp3
-Test Song 2,Artist 2,5,./assets/Carefree.mp3
-Test Song 3,Artist 3,10,./assets/Scheming Weasel faster.mp3
-Test Song 4,Artist 1,15,./assets/Pixel Peeker Polka - faster.mp3
+Choral Strings C,ERH,0,./assets/ChoralStringsC.wav
+Choral Strings D,ERH,0,./assets/ChoralStringsD.wav
+Sneaky Snitch,Artist 1,0,./assets/Sneaky Snitch.mp3
+Carefree,Artist 2,5,./assets/Carefree.mp3
+Scheming Weasel,Artist 3,10,./assets/Scheming Weasel faster.mp3
+Pixel Peeker Polka,Artist 1,15,./assets/Pixel Peeker Polka - faster.mp3

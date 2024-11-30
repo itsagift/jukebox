@@ -7,54 +7,57 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.media.*?>
 
 
-<BorderPane 
-    xmlns:fx="http://javafx.com/fxml" styleClass="root" fx:controller="Controller">
-    <right>
+<BorderPane
+  xmlns:fx="http://javafx.com/fxml" styleClass="root" fx:controller="Controller">
+  <right>
     <VBox>
       <HBox>
-      <Text id="welcome-text" text="Sort By"/>
+        <Text id="welcome-text" text="Sort By" />
       </HBox>
       <!-- Reference the ToggleGroup for each ToggleButton -->
-      <RadioButton text="Title" fx:id="button1" toggleGroup="$radioToggleGroup"/>
-      <RadioButton text="Artist" fx:id="button2" toggleGroup="$radioToggleGroup"/>
-      
-      <Text fx:id="actiontarget"/>
+      <RadioButton text="Title" fx:id="button1" toggleGroup="$radioToggleGroup" />
+      <RadioButton text="Artist" fx:id="button2" toggleGroup="$radioToggleGroup" />
 
-      <ListView fx:id="listView"/>
+      <Text fx:id="actiontarget" />
+
+      <ListView fx:id="listView" />
+      <Button fx:id="buySongButton" disable="true" text="Buy Song"/>
     </VBox>
-    </right>
-    <center>
-      <BorderPane>
-        <center>
-          <VBox alignment="center">
-            <Label fx:id="nowPlayingLabel">
-            
-            </Label>
-          </VBox>
-        </center>
-        <bottom>
+  </right>
+  <center>
+    <BorderPane>
+      <center>
+        <VBox alignment="center">
+          <Label fx:id="nowPlayingLabel"/>
+            <ScrollPane>
+              <HBox spacing="5" fx:id="queueUI"></HBox>
+            </ScrollPane>
+        </VBox>
+      </center>
+      <bottom>
         <VBox fx:id="bottomVert">
           <HBox fx:id="textField" spacing="10">
             <!-- <Label fx:id="textFieldLabel"></Label> -->
-            <TextField fx:id="textFieldField"/>
-            <Button fx:id="payButton" text="Pay"/>
+            <TextField fx:id="textFieldField" />
+            <Button fx:id="payButton" text="Pay" />
           </HBox>
           <HBox fx:id="bottomBar">
-            <ToggleButton fx:id="addChangeButton" toggleGroup="$paymentToggleGroup"/>
-            <ToggleButton fx:id="swipeCardButton" toggleGroup="$paymentToggleGroup"/>
+            <ToggleButton fx:id="addChangeButton" toggleGroup="$paymentToggleGroup" />
+            <ToggleButton fx:id="swipeCardButton" toggleGroup="$paymentToggleGroup" />
             <!-- <Rectangle width="200" height="100" fx:id="rectid"/> -->
-            <Label fx:id="balanceLabel"/>
+            <Label fx:id="balanceLabel" />
           </HBox>
-          </VBox>
-        </bottom>
-      </BorderPane>
-    </center>
-    
-        
-    <stylesheets>
-      <URL value="@test.css" />
-    </stylesheets>
+        </VBox>
+      </bottom>
+    </BorderPane>
+  </center>
+
+
+  <stylesheets>
+    <URL value="@test.css" />
+  </stylesheets>
 
 </BorderPane>
