@@ -14,6 +14,7 @@ public class SongPlayer  {
     private MediaPlayer mediaPlayer;
     private PurchaseQueue purchaseQueue;
     private StringProperty currentSong = new SimpleStringProperty();
+    private StringProperty currentArtist = new SimpleStringProperty();
     String[] song;
 
 
@@ -29,10 +30,14 @@ public class SongPlayer  {
     public StringProperty getSongProperty() {
         return currentSong;
     }
+    public StringProperty getArtistProperty() {
+        return currentArtist;
+    }
 
     public void playSong(String[] song){
         String uri = Paths.get(song[3]).toUri().toString();
         currentSong.set(song[0]);
+        currentArtist.set(song[1]);
         Media media = new Media(uri);
         mediaPlayer = new MediaPlayer(media);
         

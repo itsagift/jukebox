@@ -15,13 +15,14 @@
   <right>
     <VBox>
       <HBox>
-        <Text id="welcome-text" text="Sort By" />
-      </HBox>
+        <Text text="Sort By" />
+      
       <!-- Reference the ToggleGroup for each ToggleButton -->
       <RadioButton text="Title" fx:id="button1" toggleGroup="$radioToggleGroup" />
       <RadioButton text="Artist" fx:id="button2" toggleGroup="$radioToggleGroup" />
-
-      <Text fx:id="actiontarget" />
+      </HBox>
+<!-- 
+      <Text fx:id="actiontarget" /> -->
 
       <ListView fx:id="listView" />
       <Button fx:id="buySongButton" disable="true" text="Buy Song"/>
@@ -33,6 +34,7 @@
         <VBox alignment="center">
           <Label fx:id="nowPlayingLabel"/>
           <Label fx:id="songPlayingLabel"/>
+          <Label fx:id="artistPlayingLabel"/>
             <ScrollPane>
               <HBox spacing="5" fx:id="queueUI"></HBox>
             </ScrollPane>

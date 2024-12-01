@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 
 import javafx.scene.media.Media;
@@ -34,10 +35,11 @@ public class Controller {
     private RadioButton button2;
     @FXML private ToggleGroup radioToggleGroup;
     @FXML private ToggleGroup paymentToggleGroup;
-    @FXML private Text actiontarget;
+    
     @FXML private ListView<String[]> listView;
     @FXML private Label nowPlayingLabel;
     @FXML private Label songPlayingLabel;
+    @FXML private Label artistPlayingLabel;
     @FXML private ToggleButton addChangeButton;
     @FXML private ToggleButton swipeCardButton;
     @FXML private TextField textFieldField;
@@ -101,8 +103,9 @@ public class Controller {
                     protected void updateItem(String[] item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null && !empty) {
-                            // Display only the song title (first element of the array)
-                            setText(item[0]);
+                            TextFlow textFlow = new TextFlow();
+                            Text titleText = new Text(item[0]);
+                            titleText.setStyle("-fx-font-weight: bold;");
                         } else {
                             setText(null);
                         }
@@ -136,6 +139,7 @@ public class Controller {
                 songPlayer.playSong(song);
                 playlistInitialized = true;
                 songPlayingLabel.textProperty().bind(songPlayer.getSongProperty());
+                artistPlayingLabel.textProperty().bind(songPlayer.getArtistProperty());
             }
         });
         
@@ -161,12 +165,12 @@ public class Controller {
         Toggle new_toggle) -> {
             if (radioToggleGroup.getSelectedToggle() != null) {
                 String placeholder = radioToggleGroup.getSelectedToggle().getUserData().toString();
-                actiontarget.setText(placeholder);
+                // actiontarget.setText(placeholder);
             }
         });
         if (radioToggleGroup.getSelectedToggle() != null) {
             String placeholder = radioToggleGroup.getSelectedToggle().getUserData().toString();
-            actiontarget.setText(placeholder);
+            // actiontarget.setText(placeholder);
         }
         initializePlayingUI();
         initializeSongListUI();
