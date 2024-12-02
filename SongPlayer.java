@@ -55,9 +55,14 @@ public class SongPlayer {
      * @param song the current song
      */
     public void playSong(String[] song) {
-        String uri = Paths.get(song[3]).toUri().toString();
-        currentSong.set(song[0]);
-        currentArtist.set(song[1]);
+        String uri;
+        if (song[SongList.SONG_URI].startsWith("http")) {
+            uri = song[SongList.SONG_URI];
+        } else {
+            uri = Paths.get(song[SongList.SONG_URI]).toUri().toString();
+        }
+        currentSong.set(song[SongList.SONG_TITLE]);
+        currentArtist.set(song[SongList.SONG_ARTIST]);
         Media media = new Media(uri);
         mediaPlayer = new MediaPlayer(media);
 
