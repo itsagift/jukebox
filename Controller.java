@@ -134,7 +134,7 @@ public class Controller {
         buySongButton.setOnAction(event -> { 
             purchaseQueue.takeSongIndex(listView.getSelectionModel().getSelectedIndex());
             balanceLabel.setText("Balance:" + Integer.toString(balanceBox.getFunds()));
-            if (!playlistInitialized) {
+            if (!playlistInitialized && purchaseQueue.hasNextSong()) {
                 String[] song = purchaseQueue.nextSong();
                 System.out.printf("queue has items! %s \n", Arrays.toString(song));
                 songPlayer = new SongPlayer(song, purchaseQueue);
@@ -142,7 +142,7 @@ public class Controller {
                 playlistInitialized = true;
                 songPlayingLabel.textProperty().bind(songPlayer.getSongProperty());
                 artistPlayingLabel.textProperty().bind(songPlayer.getArtistProperty());
-            } else if (songPlayer.getSongProperty().get() == "") {
+            } else if (purchaseQueue.hasNextSong() && songPlayer.getSongProperty().get() == "") {
                 String[] song = purchaseQueue.nextSong();
                 songPlayer.playSong(song);
             }
