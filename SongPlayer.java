@@ -1,4 +1,4 @@
- import java.nio.file.Paths;
+import java.nio.file.Paths;
 
 import javafx.util.Duration;
 
@@ -10,59 +10,77 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
-public class SongPlayer  {
+/**
+ * Class representing a song player.
+ *
+ * @author Chase Reynolds, Tess Avitabile
+ */
+public class SongPlayer {
     private MediaPlayer mediaPlayer;
     private PurchaseQueue purchaseQueue;
     private StringProperty currentSong = new SimpleStringProperty();
     private StringProperty currentArtist = new SimpleStringProperty();
-    String[] song;
 
-
-    public SongPlayer(String[] song, PurchaseQueue purchaseQueue){
-        this.song = song;
+    /**
+     * Constructs a song player.
+     * 
+     * @param purchaseQueue the purchase queue for this song player
+     */
+    public SongPlayer(PurchaseQueue purchaseQueue) {
         this.purchaseQueue = purchaseQueue;
     }
-    
-    public String getSongTitle(){
-        return this.song[0];
-    }
 
+    /**
+     * Returns the song title.
+     * 
+     * @return song title
+     */
     public StringProperty getSongProperty() {
         return currentSong;
     }
+
+    /**
+     * Returns the song artist.
+     * 
+     * @return song artist
+     */
     public StringProperty getArtistProperty() {
         return currentArtist;
     }
 
-    public void playSong(String[] song){
+    /**
+     * Plays the current song, then plays the next song from the queue, if it
+     * exists.
+     * 
+     * @param song the current song
+     */
+    public void playSong(String[] song) {
         String uri = Paths.get(song[3]).toUri().toString();
         currentSong.set(song[0]);
         currentArtist.set(song[1]);
         Media media = new Media(uri);
         mediaPlayer = new MediaPlayer(media);
-        
-        System.out.println("playing song");
-        System.out.println(song[0]);
+
+        System.out.printf("playing song: %s\n", song[0]);
         mediaPlayer.setOnReady(() -> {
             System.out.println("Duration: " + mediaPlayer.getMedia().getDuration());
             mediaPlayer.play();
         });
         mediaPlayer.setOnEndOfMedia(() -> {
-            System.out.println("SongPlayer.java: music over");
-            if (purchaseQueue.hasNextSong()){
+            System.out.println("song over");
+            if (purchaseQueue.hasNextSong()) {
                 playSong(purchaseQueue.nextSong());
             } else {
                 currentSong.set("");
                 currentArtist.set("");
                 mediaPlayer.dispose();
             }
-           
-        }); 
+
+        });
         mediaPlayer.setOnError(() -> {
             System.out.println("Error: " + mediaPlayer.getError());
         });
-        
+
     }
 
-    
 }

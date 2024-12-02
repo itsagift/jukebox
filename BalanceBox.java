@@ -1,21 +1,36 @@
-import java.util.Scanner;
-
+/**
+ * Class representing a balance box.
+ *
+ * @author Chase Reynolds, Tess Avitabile
+ */
 public class BalanceBox {
-    public CreditPayments creditPayments;
-    public CoinPayments coinPayments;
+    private CreditPayments creditPayments;
+    private CoinPayments coinPayments;
     private int funds = 0;
-    private Scanner scan;
 
-    public BalanceBox(Scanner scan) {
-        this.scan = scan;
-        creditPayments = new CreditPayments(scan);
-        coinPayments = new CoinPayments(scan);
+    /**
+     * Initializes a balance box.
+     */
+    public BalanceBox() {
+        creditPayments = new CreditPayments();
+        coinPayments = new CoinPayments();
     }
 
-    public int getFunds(){
+    /**
+     * Reports the funds available in the balance box.
+     * 
+     * @return funds available
+     */
+    public int getFunds() {
         return funds;
     }
 
+    /**
+     * Accepts funds by coin or credit.
+     * 
+     * @param input       the coin or amount
+     * @param paymentType coinr or credit
+     */
     public void acceptFunds(String input, String paymentType) {
         switch (paymentType) {
             case "coin":
@@ -24,12 +39,15 @@ public class BalanceBox {
             case "credit":
                 funds += creditPayments.takePayment(input);
                 return;
-            default:
-                System.out.println("Must enter 1 or 2");
-                return;
         }
     }
 
+    /**
+     * Deducts the amount from the available funds, first by credit, then by coin.
+     * 
+     * @param amount the amount to deducts
+     * @return whether the amount was successfully deducted
+     */
     public boolean deductFunds(int amount) {
         if (amount > funds || amount < 0) {
             System.out.printf("Cannot deduct %d, balance is %d\n", amount, funds);
@@ -41,42 +59,11 @@ public class BalanceBox {
         return true;
     }
 
+    /**
+     * Returns all funds available by credit and coin.
+     */
     public void returnFunds() {
         System.out.println(creditPayments.returnFunds());
         System.out.println(coinPayments.returnFunds());
     }
-
-    public void promptBalance() {
-        while (true) {
-            System.out.print("Enter 1 to add funds, 2 to make a purchase, 3 to return funds, 4 to quit: ");
-            String input = scan.nextLine();
-            switch (input) {
-                case "1":
-                    acceptFunds(input, "coin");
-                    break;
-                case "2":
-                    System.out.print("Enter the purchase cost: ");
-                    input = scan.nextLine();
-                    try {
-                        int amount = Integer.parseInt(input);
-                        if (deductFunds(amount)) {
-                            System.out.println("Successfully deducted funds");
-                        } else {
-                            System.out.println("Unable to deduct funds");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Must enter an integer");
-                    }
-                    break;
-                case "3":
-                    returnFunds();
-                    break;
-                case "4":
-                    return;
-                default:
-                    System.out.println("Invalid option");
-            }
-        }
-    }
-
 }

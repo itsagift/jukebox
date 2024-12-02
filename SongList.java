@@ -2,15 +2,41 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Class representing a song list.
+ *
+ * @author Chase Reynolds, Tess Avitabile
+ */
 public class SongList {
   private String songInfo[][];
   private String songInfoByTitle[][];
   private String songInfoByArtist[][];
+
+  /**
+   * The index of the song title in the array representing the song.
+   */
   public static final int SONG_TITLE = 0;
+
+  /**
+   * The index of the song artist in the array representing the song.
+   */
   public static final int SONG_ARTIST = 1;
+
+  /**
+   * The index of the song cost in the array representing the song.
+   */
   public static final int SONG_COST = 2;
+
+  /**
+   * The index of the song URI in the array representing the song.
+   */
   public static final int SONG_URI = 3;
 
+  /**
+   * Constructs a song list from a song csv file.
+   * 
+   * @param fileName the song csv file
+   */
   public SongList(String fileName) {
     int lineCount = 0;
     try {
@@ -49,6 +75,13 @@ public class SongList {
     songInfoByArtist = sort(songInfo, SONG_ARTIST);
   }
 
+  /**
+   * Sorts an array of songs by the desired parameter.
+   * 
+   * @param songs the array of songs
+   * @param by    the parameter to sort by
+   * @return the sorted array
+   */
   private String[][] sort(String[][] songs, int by) {
     String sorted[][] = songs.clone();
     for (int i = 0; i < sorted.length; i++) {
@@ -63,30 +96,38 @@ public class SongList {
     return sorted;
   }
 
+  /**
+   * Returns the list of songs.
+   * 
+   * @return the list of songs
+   */
   public String[][] getSongInfo() {
     return this.songInfo;
   }
 
+  /**
+   * Returns the list of songs sorted by title.
+   * 
+   * @return the list of songs sorted by title
+   */
   public String[][] getSongInfoByTitle() {
     return songInfoByTitle;
   }
 
+  /**
+   * Returns the list of songs sorted by artist.
+   * 
+   * @return the list of songs sorted by artist
+   */
   public String[][] getSongInfoByArtist() {
     return songInfoByArtist;
   }
 
-  public String[] getSongTitleList(){
-    String[] songTitles = new String[songInfo.length];
-    for (int i = 0; i < songInfo.length; i++) {
-      songTitles[i] = songInfo[i][0];
-    }
-    return songTitles;
-  }
-
-  public String[] getIndividualSong(int index) {
-    return this.songInfo[index];
-  }
-
+  /**
+   * Returns a string representation of the song list.
+   * 
+   * @return string representation of the song list
+   */
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < songInfo.length; i++) {
@@ -95,5 +136,5 @@ public class SongList {
     }
     return sb.toString();
   }
-  
+
 }

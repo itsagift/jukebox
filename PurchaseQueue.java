@@ -1,70 +1,89 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Scanner;
 
+/**
+ * Class representing a purchase queue.
+ *
+ * @author Chase Reynolds, Tess Avitabile
+ */
 public class PurchaseQueue {
+  private static final int ADD_FIRST_COST = 5;
   private Deque<String[]> queue;
   private SongList songList;
-  private Scanner scan;
   private BalanceBox balance;
-  
 
+  /**
+   * Constructs a PurchaseQueue.
+   * 
+   * @param songList   the songs available for purchase
+   * @param balanceBox the balance box associated with this purchase queue
+   */
   public PurchaseQueue(SongList songList, BalanceBox balanceBox) {
     this.balance = balanceBox;
     this.songList = songList;
     this.queue = new ArrayDeque<>();
   }
 
+  /**
+   * Adds a song to the queue and deducts funds.
+   * 
+   * @param songIndex the index of the song
+   * @param sortBy    whether the songs are sorted by "Title" or "Artist"
+   * @param addFirst  whether to add the song to the front of the queue
+   */
   public void takeSongIndex(int songIndex, String sortBy, boolean addFirst) {
-    // System.out.println(songList);
-    // System.out.print("Enter a song index: ");
-    // String indexString = scan.nextLine();
     try {
-      // int index = Integer.parseInt(indexString);
-      String[] song = songList.getIndividualSong(songIndex);
+      String[] song;
       if (sortBy.equals("Title")) {
         song = songList.getSongInfoByTitle()[songIndex];
-      } else if (sortBy.equals("Artist")) {
+      } else {
         song = songList.getSongInfoByArtist()[songIndex];
       }
-      int songCost = Integer.parseInt(song[2]);
-      if (balance.deductFunds(songCost + (addFirst ? 5 : 0))) {
+      int songCost = Integer.parseInt(song[SongList.SONG_COST]);
+      if (balance.deductFunds(songCost + (addFirst ? ADD_FIRST_COST : 0))) {
         if (addFirst) {
           queue.addFirst(song);
         } else {
           queue.addLast(song);
         }
-        // System.out.printf("Added song to queue: %s \n", song[SongList.SONG_TITLE]);
       } else {
         System.out.println("Not enough funds");
       }
-    } catch (NumberFormatException e) {
-      System.out.println("Must enter a valid song number");
     } catch (ArrayIndexOutOfBoundsException e) {
       System.out.println("Must enter a valid song number");
     }
   }
 
-  public void acceptFunds() {
-    balance.acceptFunds("", "");
-  }
-
+  /**
+   * Returns all funds from the balance box.
+   */
   public void returnFunds() {
     balance.returnFunds();
   }
 
+  /**
+   * Pops the next song from the queue.
+   * 
+   * @return the next song to play
+   */
   public String[] nextSong() {
     return queue.pop();
   }
 
+  /**
+   * Returns whether the queue has a next song.
+   * 
+   * @return whether the queue has a next song
+   */
   public boolean hasNextSong() {
     return queue.size() > 0;
   }
 
-  public int getQueueLength() {
-    return queue.size();
-  }
-
+  /**
+   * Returns a string representation of the queue.
+   * 
+   * @return string representation of the queue
+   */
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (String[] song : queue) {
@@ -73,45 +92,4 @@ public class PurchaseQueue {
     }
     return sb.toString();
   }
-
-  public void playlist(){
-    
-  }
-
-  public static void main(String[] args) {
-    // Scanner scan = new Scanner(System.in);
-    // PurchaseQueue purchaseQueue = new PurchaseQueue("songListTest.csv", scan);
-    // while (true) {
-    //   System.out.print(
-    //       "Enter 1 to add funds, 2 to purchase a song, 3 to print the song queue, 4 to receive a refund, 5 to play a song, 6 to quit: ");
-    //   String input = scan.nextLine();
-    //   switch (input) {
-    //     case "1":
-    //       purchaseQueue.acceptFunds();
-    //       break;
-    //     case "2":
-    //       purchaseQueue.takeSongIndex(2);
-    //       break;
-    //     case "3":
-    //       System.out.println(purchaseQueue);
-    //       break;
-    //     case "4":
-    //       purchaseQueue.returnFunds();
-    //       break;
-    //     case "5":
-    //       if (purchaseQueue.hasNextSong()) {
-    //         System.out.println("buying");
-    //         SongPlayerFX.launch(SongPlayerFX.class, purchaseQueue.nextSong());
-    //       } else {
-    //         System.out.println("No songs in queue");
-    //       }
-    //       break;
-    //     case "6":
-    //       return;
-    //     default:
-    //       System.out.println("Invalid option");
-    //   }
-    // }
-  }
-
 }

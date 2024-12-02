@@ -1,14 +1,18 @@
-import java.util.Scanner;
-
+/**
+ * Class representing payments by credit.
+ *
+ * @author Chase Reynolds, Tess Avitabile
+ */
 public class CreditPayments implements Payments {
     private int funds = 0;
-    private Scanner scan;
 
-    public CreditPayments(Scanner scan) {
-        this.scan = scan;
-    }
-
-    public int takePayment(String input) {     
+    /**
+     * Takes a payment.
+     * 
+     * @param input the amount
+     * @return amount taken as payment
+     */
+    public int takePayment(String input) {
         try {
             int amount = Integer.parseInt(input);
             funds += amount;
@@ -19,12 +23,23 @@ public class CreditPayments implements Payments {
         return 0;
     }
 
+    /**
+     * Returns all funds on credit card.
+     * 
+     * @return a string representing the fund return
+     */
     public String returnFunds() {
         String toReturn = String.format("Returned %d cents on credit card", funds);
         funds = 0;
         return toReturn;
     }
 
+    /**
+     * Deducts the amount (if available).
+     * 
+     * @param amount the amount to deduct
+     * @return the amount actually deducted
+     */
     public int deductFunds(int amount) {
         int toDeduct = Math.min(funds, amount);
         funds -= toDeduct;
