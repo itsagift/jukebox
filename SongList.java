@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class SongList {
   private String songInfo[][];
+  private String songInfoByTitle[][];
+  private String songInfoByArtist[][];
   public static final int SONG_TITLE = 0;
   public static final int SONG_ARTIST = 1;
   public static final int SONG_COST = 2;
@@ -42,10 +44,35 @@ public class SongList {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
+
+    songInfoByTitle = sort(songInfo, SONG_TITLE);
+    songInfoByArtist = sort(songInfo, SONG_ARTIST);
+  }
+
+  private String[][] sort(String[][] songs, int by) {
+    String sorted[][] = songs.clone();
+    for (int i = 0; i < sorted.length; i++) {
+      for (int j = i; j < sorted.length; j++) {
+        if (sorted[i][by].compareTo(sorted[j][by]) > 0) {
+          String[] tmp = sorted[i];
+          sorted[i] = sorted[j];
+          sorted[j] = tmp;
+        }
+      }
+    }
+    return sorted;
   }
 
   public String[][] getSongInfo() {
     return this.songInfo;
+  }
+
+  public String[][] getSongInfoByTitle() {
+    return songInfoByTitle;
+  }
+
+  public String[][] getSongInfoByArtist() {
+    return songInfoByArtist;
   }
 
   public String[] getSongTitleList(){

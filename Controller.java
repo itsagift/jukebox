@@ -96,9 +96,13 @@ public class Controller {
         });
     }
 
-    public void initializeSongListUI(){
+    public void initializeSongListUI(String sortBy){
         ObservableList<String[]> items =FXCollections.observableArrayList ();
-        items.addAll(songList.getSongInfo());
+        if (sortBy.equals("Title")) {
+            items.addAll(songList.getSongInfoByTitle());
+        } else {
+            items.addAll(songList.getSongInfoByArtist());
+        }
         listView.setCellFactory((Callback<ListView<String[]>, ListCell<String[]>>) new Callback<ListView<String[]>, ListCell<String[]>>() {
             @Override 
             public ListCell<String[]> call(ListView<String[]> param) {
@@ -121,7 +125,7 @@ public class Controller {
         listView.getSelectionModel().selectedItemProperty().addListener(
             (ObservableValue<? extends String[]> ov, String[] old_val, 
                 String[] new_val) -> {
-                    if (new_val[SongList.SONG_TITLE] != null){
+                    if (new_val != null){
                         buySongButton.setDisable(false);
                         buySongButton.setText("Buy Song: " + new_val[SongList.SONG_TITLE]);
                         
@@ -132,7 +136,8 @@ public class Controller {
                     }
                 });
         buySongButton.setOnAction(event -> { 
-            purchaseQueue.takeSongIndex(listView.getSelectionModel().getSelectedIndex());
+            purchaseQueue.takeSongIndex(listView.getSelectionModel().getSelectedIndex(),
+                radioToggleGroup.getSelectedToggle().getUserData().toString());
             balanceLabel.setText("Balance:" + Integer.toString(balanceBox.getFunds()));
             if (!playlistInitialized && purchaseQueue.hasNextSong()) {
                 String[] song = purchaseQueue.nextSong();
@@ -161,21 +166,17 @@ public class Controller {
         radioToggleGroup = new ToggleGroup();
         button1.setToggleGroup(radioToggleGroup);
         button2.setToggleGroup(radioToggleGroup);
-        button1.setUserData("Artist");
-        button2.setUserData("Title");
-        button2.setSelected(true);
+        button1.setUserData("Title");
+        button2.setUserData("Artist");
+        button1.setSelected(true);
         radioToggleGroup.selectedToggleProperty().addListener(
         (ObservableValue<? extends Toggle> ov, Toggle old_toggle, 
         Toggle new_toggle) -> {
             if (radioToggleGroup.getSelectedToggle() != null) {
-                String placeholder = radioToggleGroup.getSelectedToggle().getUserData().toString();
-                // actiontarget.setText(placeholder);
+                String sortBy = radioToggleGroup.getSelectedToggle().getUserData().toString();
+                initializeSongListUI(sortBy);
             }
         });
-        if (radioToggleGroup.getSelectedToggle() != null) {
-            String placeholder = radioToggleGroup.getSelectedToggle().getUserData().toString();
-            // actiontarget.setText(placeholder);
-        }
         initializePlayingUI();
-        initializeSongListUI();
+        initializeSongListUI("Title");
 }}

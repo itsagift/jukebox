@@ -15,13 +15,18 @@ public class PurchaseQueue {
     this.queue = new ArrayDeque<>();
   }
 
-  public void takeSongIndex(int songIndex) {
+  public void takeSongIndex(int songIndex, String sortBy) {
     // System.out.println(songList);
     // System.out.print("Enter a song index: ");
     // String indexString = scan.nextLine();
     try {
       // int index = Integer.parseInt(indexString);
       String[] song = songList.getIndividualSong(songIndex);
+      if (sortBy.equals("Title")) {
+        song = songList.getSongInfoByTitle()[songIndex];
+      } else if (sortBy.equals("Artist")) {
+        song = songList.getSongInfoByArtist()[songIndex];
+      }
       int songCost = Integer.parseInt(song[2]);
       if (balance.deductFunds(songCost)) {
         queue.addLast(song);
