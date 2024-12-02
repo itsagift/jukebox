@@ -13,7 +13,6 @@ public class CoinPayments implements Payments {
     }
 
     public int takePayment(String payment) {
-        System.out.println("payment worked");
         for (int i = 0; i < acceptable_coin_chars.length; i++) {
             if (acceptable_coin_chars[i].equals(payment)) {
                 changeSet[i]++;
@@ -43,7 +42,7 @@ public class CoinPayments implements Payments {
     public int deductFunds(int amount) {
         int toDeduct = Math.min(amount, currentChange);
         currentChange -= toDeduct;
-        // System.out.printf("Deducting %d in change\n", toDeduct);
+        System.out.printf("Deducting %d in change\n", toDeduct);
         return toDeduct;
     }
 }

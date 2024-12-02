@@ -35,9 +35,6 @@
           <Label fx:id="nowPlayingLabel"/>
           <Label fx:id="songPlayingLabel"/>
           <Label fx:id="artistPlayingLabel"/>
-            <ScrollPane>
-              <HBox spacing="5" fx:id="queueUI"></HBox>
-            </ScrollPane>
         </VBox>
       </center>
       <bottom>

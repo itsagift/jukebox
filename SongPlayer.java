@@ -42,6 +42,7 @@ public class SongPlayer  {
         mediaPlayer = new MediaPlayer(media);
         
         System.out.println("playing song");
+        System.out.println(song[0]);
         mediaPlayer.setOnReady(() -> {
             System.out.println("Duration: " + mediaPlayer.getMedia().getDuration());
             mediaPlayer.play();
@@ -51,6 +52,8 @@ public class SongPlayer  {
             if (purchaseQueue.hasNextSong()){
                 playSong(purchaseQueue.nextSong());
             } else {
+                currentSong.set("");
+                currentArtist.set("");
                 mediaPlayer.dispose();
             }
            

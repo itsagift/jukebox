@@ -50,7 +50,6 @@ public class Controller {
     @FXML private Button payButton;
     @FXML private Label balanceLabel;
     @FXML private Button buySongButton;
-    @FXML private HBox queueUI;
     SongList songList = new SongList("songListTest.csv");
     BalanceBox balanceBox = new BalanceBox(null);
     PurchaseQueue purchaseQueue = new PurchaseQueue(songList, balanceBox);
@@ -73,7 +72,12 @@ public class Controller {
         paymentToggleGroup.selectedToggleProperty().addListener((@SuppressWarnings("unused") ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) -> {
         if (new_toggle != null){
             textField.setVisible(true);
-            textFieldField.setPromptText("Enter amount:");
+            ToggleButton selectedToggle = (ToggleButton) paymentToggleGroup.getSelectedToggle();
+            if (selectedToggle == addChangeButton){
+                textFieldField.setPromptText("Enter coin:");
+            } else if (selectedToggle == swipeCardButton){
+                textFieldField.setPromptText("Enter amount:");
+            }
         }
         else
             textField.setVisible(false);
@@ -103,9 +107,7 @@ public class Controller {
                     protected void updateItem(String[] item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null && !empty) {
-                            TextFlow textFlow = new TextFlow();
-                            Text titleText = new Text(item[0]);
-                            titleText.setStyle("-fx-font-weight: bold;");
+                            setText(item[0] + ", " + item[1] + ", " + item[2]);
                         } else {
                             setText(null);
                         }
@@ -132,14 +134,17 @@ public class Controller {
         buySongButton.setOnAction(event -> { 
             purchaseQueue.takeSongIndex(listView.getSelectionModel().getSelectedIndex());
             balanceLabel.setText("Balance:" + Integer.toString(balanceBox.getFunds()));
-            if (purchaseQueue.getQueueLength() == 1 && playlistInitialized == false){
-                String[] song = listView.getSelectionModel().getSelectedItem();
+            if (!playlistInitialized) {
+                String[] song = purchaseQueue.nextSong();
                 System.out.printf("queue has items! %s \n", Arrays.toString(song));
                 songPlayer = new SongPlayer(song, purchaseQueue);
                 songPlayer.playSong(song);
                 playlistInitialized = true;
                 songPlayingLabel.textProperty().bind(songPlayer.getSongProperty());
                 artistPlayingLabel.textProperty().bind(songPlayer.getArtistProperty());
+            } else if (songPlayer.getSongProperty().get() == "") {
+                String[] song = purchaseQueue.nextSong();
+                songPlayer.playSong(song);
             }
         });
         
@@ -147,7 +152,6 @@ public class Controller {
 
     public void initializePlayingUI(){
         nowPlayingLabel.setText("Now playing");
-        queueUI.getChildren().add(new Label("Up next:"));
     }
 
     @SuppressWarnings("unused")
