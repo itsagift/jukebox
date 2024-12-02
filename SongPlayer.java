@@ -53,14 +53,16 @@ public class SongPlayer {
      * exists.
      * 
      * @param song the current song
+     * @param controller the controller using this song player
      */
-    public void playSong(String[] song) {
+    public void playSong(String[] song, Controller controller) {
         String uri;
-        if (song[SongList.SONG_URI].startsWith("http")) {
+        if (song[SongList.SONG_URI].startsWith("http") || song[SongList.SONG_URI].startsWith("file")) {
             uri = song[SongList.SONG_URI];
         } else {
             uri = Paths.get(song[SongList.SONG_URI]).toUri().toString();
         }
+        System.out.println(uri);
         currentSong.set(song[SongList.SONG_TITLE]);
         currentArtist.set(song[SongList.SONG_ARTIST]);
         Media media = new Media(uri);
@@ -70,11 +72,13 @@ public class SongPlayer {
         mediaPlayer.setOnReady(() -> {
             System.out.println("Duration: " + mediaPlayer.getMedia().getDuration());
             mediaPlayer.play();
+            controller.startAnimation();
         });
         mediaPlayer.setOnEndOfMedia(() -> {
             System.out.println("song over");
+            controller.stopAnimation();
             if (purchaseQueue.hasNextSong()) {
-                playSong(purchaseQueue.nextSong());
+                playSong(purchaseQueue.nextSong(), controller);
             } else {
                 currentSong.set("");
                 currentArtist.set("");
@@ -84,6 +88,7 @@ public class SongPlayer {
         });
         mediaPlayer.setOnError(() -> {
             System.out.println("Error: " + mediaPlayer.getError());
+            controller.stopAnimation();
         });
 
     }

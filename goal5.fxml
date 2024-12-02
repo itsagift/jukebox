@@ -16,13 +16,9 @@
     <VBox>
       <HBox>
         <Text text="Sort By" />
-      
-      <!-- Reference the ToggleGroup for each ToggleButton -->
       <RadioButton text="Title" fx:id="button1" toggleGroup="$radioToggleGroup" />
       <RadioButton text="Artist" fx:id="button2" toggleGroup="$radioToggleGroup" />
       </HBox>
-<!-- 
-      <Text fx:id="actiontarget" /> -->
 
       <ListView fx:id="listView" />
       <CheckBox fx:id="addFirstCheckBox" text="Add First (+5)" />
@@ -31,6 +27,10 @@
   </right>
   <center>
     <BorderPane>
+      <top>
+        <VBox fx:id="visualization">
+        </VBox>
+      </top>
       <center>
         <VBox alignment="center">
           <Label fx:id="nowPlayingLabel"/>
@@ -41,14 +41,12 @@
       <bottom>
         <VBox fx:id="bottomVert">
           <HBox fx:id="textField" spacing="10">
-            <!-- <Label fx:id="textFieldLabel"></Label> -->
             <TextField fx:id="textFieldField" />
             <Button fx:id="payButton" text="Pay" />
           </HBox>
           <HBox fx:id="bottomBar">
             <ToggleButton fx:id="addChangeButton" toggleGroup="$paymentToggleGroup" />
             <ToggleButton fx:id="swipeCardButton" toggleGroup="$paymentToggleGroup" />
-            <!-- <Rectangle width="200" height="100" fx:id="rectid"/> -->
             <Label fx:id="balanceLabel" />
           </HBox>
         </VBox>

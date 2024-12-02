@@ -17,8 +17,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Toggle;
 
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
@@ -26,6 +28,11 @@ import javafx.util.Callback;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+
+import javafx.animation.Timeline;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
+import javafx.util.Duration;
 
 /**
  * Class representing the UI controller for a jukebox.
@@ -63,13 +70,15 @@ public class Controller {
     @FXML
     private HBox bottomBar;
     @FXML
-    private Rectangle rectid;
-    @FXML
     private Button payButton;
     @FXML
     private Label balanceLabel;
     @FXML
     private Button buySongButton;
+    @FXML
+    private VBox visualization;
+    @FXML
+    private ParallelTransition animation;
     private SongList songList = new SongList("songListTest.csv");
     private BalanceBox balanceBox = new BalanceBox();
     private PurchaseQueue purchaseQueue = new PurchaseQueue(songList, balanceBox);
@@ -167,23 +176,57 @@ public class Controller {
                 String[] song = purchaseQueue.nextSong();
                 System.out.printf("queue has items! %s \n", Arrays.toString(song));
                 songPlayer = new SongPlayer(purchaseQueue);
-                songPlayer.playSong(song);
+                songPlayer.playSong(song, this);
                 playlistInitialized = true;
                 songPlayingLabel.textProperty().bind(songPlayer.getSongProperty());
                 artistPlayingLabel.textProperty().bind(songPlayer.getArtistProperty());
             } else if (purchaseQueue.hasNextSong() && songPlayer.getSongProperty().get() == "") {
                 String[] song = purchaseQueue.nextSong();
-                songPlayer.playSong(song);
+                songPlayer.playSong(song, this);
             }
         });
 
     };
 
     /**
-     * Initialized the playing UI.
+     * Initializes the playing UI.
      */
     public void initializePlayingUI() {
         nowPlayingLabel.setText("Now playing");
+    }
+
+    /**
+     * Initializes the visualization.
+     */
+    public void initializeVisualization() {
+        HBox hbox = new HBox(15);
+        visualization.getChildren().add(hbox);
+        Color colors[] = new Color[] { Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA };
+        animation = new ParallelTransition();
+        for (int i = 0; i < 12; i++) {
+            Circle circle = new Circle(10, colors[i % colors.length]);
+            hbox.getChildren().add(circle);
+            TranslateTransition translate = new TranslateTransition(Duration.millis((i + 1) * 1000), circle);
+            translate.setToX(0);
+            translate.setToY(300);
+            animation.getChildren().add(translate);
+        }
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.setAutoReverse(true);
+    }
+
+    /**
+     * Starts the animation.
+     */
+    public void startAnimation() {
+        animation.play();
+    }
+
+    /**
+     * Stops the animation.
+     */
+    public void stopAnimation() {
+        animation.pause();
     }
 
     /**
@@ -207,5 +250,6 @@ public class Controller {
                 });
         initializePlayingUI();
         initializeSongListUI("Title");
+        initializeVisualization();
     }
 }

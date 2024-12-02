@@ -15,6 +15,10 @@ public class CreditPayments implements Payments {
     public int takePayment(String input) {
         try {
             int amount = Integer.parseInt(input);
+            if (amount < 0) {
+                System.out.println("Amount cannot be negative");
+                return 0;
+            }
             funds += amount;
             return amount;
         } catch (NumberFormatException e) {
