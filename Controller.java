@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -34,6 +35,7 @@ public class Controller {
     @FXML
     private RadioButton button2;
     @FXML private ToggleGroup radioToggleGroup;
+    @FXML private CheckBox addFirstCheckBox;
     @FXML private ToggleGroup paymentToggleGroup;
     
     @FXML private ListView<String[]> listView;
@@ -137,7 +139,7 @@ public class Controller {
                 });
         buySongButton.setOnAction(event -> { 
             purchaseQueue.takeSongIndex(listView.getSelectionModel().getSelectedIndex(),
-                radioToggleGroup.getSelectedToggle().getUserData().toString());
+                radioToggleGroup.getSelectedToggle().getUserData().toString(), addFirstCheckBox.isSelected());
             balanceLabel.setText("Balance:" + Integer.toString(balanceBox.getFunds()));
             if (!playlistInitialized && purchaseQueue.hasNextSong()) {
                 String[] song = purchaseQueue.nextSong();

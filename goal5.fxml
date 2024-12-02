@@ -25,6 +25,7 @@
       <Text fx:id="actiontarget" /> -->
 
       <ListView fx:id="listView" />
+      <CheckBox fx:id="addFirstCheckBox" text="Add First (+5)" />
       <Button fx:id="buySongButton" disable="true" text="Buy Song"/>
     </VBox>
   </right>
