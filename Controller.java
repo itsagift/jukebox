@@ -79,16 +79,16 @@ public class Controller {
     private VBox visualization;
     @FXML
     private ParallelTransition animation;
-    private SongList songList = new SongList("songListTest.csv");
+    private SongList songList;
     private BalanceBox balanceBox = new BalanceBox();
-    private PurchaseQueue purchaseQueue = new PurchaseQueue(songList, balanceBox);
+    private PurchaseQueue purchaseQueue;
     private SongPlayer songPlayer;
     private boolean playlistInitialized = false;
 
     /**
      * Initializes the payment UI.
      */
-    public void initializePaymentUI() {
+    private void initializePaymentUI() {
         paymentToggleGroup = new ToggleGroup();
         addChangeButton.setToggleGroup(paymentToggleGroup);
         swipeCardButton.setToggleGroup(paymentToggleGroup);
@@ -130,7 +130,7 @@ public class Controller {
      * 
      * @param sortBy whether to sort songs by Title or Artists
      */
-    public void initializeSongListUI(String sortBy) {
+    private void initializeSongListUI(String sortBy) {
         ObservableList<String[]> items = FXCollections.observableArrayList();
         if (sortBy.equals("Title")) {
             items.addAll(songList.getSongInfoByTitle());
@@ -191,14 +191,14 @@ public class Controller {
     /**
      * Initializes the playing UI.
      */
-    public void initializePlayingUI() {
+    private void initializePlayingUI() {
         nowPlayingLabel.setText("Now playing");
     }
 
     /**
      * Initializes the visualization.
      */
-    public void initializeVisualization() {
+    private void initializeVisualization() {
         HBox hbox = new HBox(15);
         visualization.getChildren().add(hbox);
         Color colors[] = new Color[] { Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA };
@@ -249,7 +249,17 @@ public class Controller {
                     }
                 });
         initializePlayingUI();
-        initializeSongListUI("Title");
         initializeVisualization();
+    }
+
+    /**
+     * Initializes the song list using the provided song csv file
+     * 
+     * @param songFile a song csv file
+     */
+    public void initializeSongList(String songFile) {
+        songList = new SongList(songFile);
+        purchaseQueue = new PurchaseQueue(songList, balanceBox);
+        initializeSongListUI("Title");
     }
 }
